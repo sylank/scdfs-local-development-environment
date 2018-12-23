@@ -1,11 +1,11 @@
 # Local development environment for Spring Dataflow Server
 
 ## Environment setup
-This repo contains a docker based local development environment for Spring Cloud Dataflow Server. It conains the major dependencies:
-* Kafka[https://kafka.apache.org/] message broker server
-* Zookeeper[https://zookeeper.apache.org/] coordination service for Kafka
-* Redis[https://redis.io/] cache databas to save stream data
-* Skipper[https://cloud.spring.io/spring-cloud-skipper/] server to run and manage stream applications
+This repo contains a docker based local development environment for Spring Cloud Dataflow Server. It contains the major dependencies:
+* [Kafka](https://kafka.apache.org/) message broker server
+* [Zookeeper](https://zookeeper.apache.org/) coordination service for Kafka
+* [Redis](https://redis.io/) cache database to save stream data
+* [Skipper](https://cloud.spring.io/spring-cloud-skipper/) server to run and manage stream applications
 
 Requirements:
 * Docker
@@ -18,10 +18,10 @@ It is easy to use:
 .\compose.sh
 ```
 
-**Note:** you will not reach the Kafka, Zookeeper, Redis service because we do not bint the ports to host due to `expose` keyword in compose file. That services is reachable inside the docker network. If you want to reach them outside use `ports` keyword but check use different ports.
+**Note:** you will not reach the Kafka, Zookeeper, Redis service because we do not bint the ports to host due to `expose` keyword in the compose file. These services are reachable inside the docker network. If you want to reach them outside use `ports` keyword but check use different ports.
 
 ## Container check
-We need to check the proper working of the docker. Some linux distribution can denie some service. For example the **apparmor** can denie the port binding. Sometimes the docker can not resolve DNS names. 
+We need to check the proper working of the docker. Some Linux distribution can deny some service. For example, the **apparmor** can deny the port binding. Sometimes the docker cannot resolve DNS names. 
 
 Use jimho's tcp-echo server to check your containers can bind port on your host OS. If you can not see BindingExceptions or Permission denied exceptions your container have access to the host OS ports.
 
@@ -30,15 +30,26 @@ To avoid binding exceptions:
 docker run jimho/tcp-echo
 ```
 
-After start you will have to download maven resources so you need 'internet' access. Check your connection with byrnedo's curl image.
+After start, you will have to download maven resources so you need 'internet' access. Check your connection with byrnedo's curl image.
 
 To check internet access:
 ```
 docker run byrnedo/alpine-curl https://www.google.com
 ```
 
+### Short troubleshooting commands
+
+Add your user into docker user group:
+```
+sudo usermod -aG docker $USER
+```
+
+[Post-installation steps for Linux](https://docs.docker.com/install/linux/linux-postinstall/)
+
+Set the DNS setting for docker [link](https://development.robinwinslow.uk/2016/06/23/fix-docker-networking-dns/).
+
 ## Dataflow Server setup
-In this step we will clone and build the Spring Cloud Dataflow Server. Please find the link[https://cloud.spring.io/spring-cloud-dataflow/] to read something about the project.
+In this step, we will clone and build the Spring Cloud Dataflow Server. Please find the [link](https://cloud.spring.io/spring-cloud-dataflow/) to read something about the project.
 
 Clone the repo:
 ```
@@ -50,7 +61,7 @@ Step inside the directory and build it with maven wrapper:
 ./mvnw clean install or ./mvnw clean install -DskipTests 
 ```
 
-When the build finish successfully, jar files will be generated, so you can run the modules with java commands. We will use the `spring-cloud-dataflow-shell` to manage the server (do not affraid you can use TAB to auto-complete commands).
+When the build finish successfully, jar files will be generated, so you can run the modules with java commands. We will use the `spring-cloud-dataflow-shell` to manage the server (do not afraid you can use TAB to auto-complete commands).
 
 If the build ended you have to setup some environment variables for the stream applications and for the server too:
 ```
@@ -60,7 +71,7 @@ spring.cloud.skipper.client.serverUri=http://127.0.0.1:7577/api
 ```
 **Note:** the `kafka` and the `zookeeper` keywords are used in the docker network, docker will resolve them to real IP adresses, if you don't use docker environment change them to `localhost` or another address.
 
-You can export it in yout current shell session or you set the variables at IntelliJ's Run/Debug Configurations
+You can export it in your current shell session or you set the variables at IntelliJ's Run/Debug Configurations
 
 Now you can start the server:
 ```
@@ -69,10 +80,10 @@ java -jar spring-cloud-dataflow-server/target/spring-cloud-dataflow-server-<vers
 
 It is running on `http://localhost:9393` and you can reach the dashboard UI at `http://localhost:9393/dashboard/index.html`
 
-If you have question, project Gitter channel: https://gitter.im/spring-cloud/spring-cloud-dataflow
+If you have a question, project Gitter channel: https://gitter.im/spring-cloud/spring-cloud-dataflow
 
 ### Install apps
-You have to install (register) apps to create streams. This is just a setup documentation so we will not take deep dive. You can use maven local or remote urls and local files on your local file system.
+You have to install (register) apps to create streams. This is just an installation guideline documentation so we will not take deep dive. You can use maven local or remote URLs and local files on your local file system.
 
 Up to date application list: https://cloud.spring.io/spring-cloud-stream-app-starters/
 
@@ -83,7 +94,7 @@ dataflow:>app import --uri http://bit.ly/Darwin-SR3-stream-applications-kafka-ma
 ```
 
 #### Maven
-It is better to use this[https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps] guideline.
+It is better to use [this](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps) guideline.
 
 Shell command:
 ```
@@ -96,14 +107,14 @@ maven://<groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
 ```
 
 #### Local
-You can use your local file system but it is complecated when you use docker environment because of skipper and docker and host file system. It is better to read the app register documentation[https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps].
+You can use your local file system but it is complicated when you use docker environment because of skipper and docker and host file system. It is better to read the app register [documentation](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-register-stream-apps).
 
 Some useful command:
 ```
 dataflow:>app register --name myprocessor --type processor --uri file:///Users/example/myprocessor-1.2.3.jar
 ```
 
-Or import if from a http url:
+Or import if from an HTTP URL:
 ```
 dataflow:>app register --name mysink --type sink --uri http://example.com/mysink-2.0.1.jar
 ```
@@ -147,7 +158,7 @@ skipper           | 2018-12-23 11:28:37.746  INFO 1 --- [eTaskExecutor-3] o.s.c.
 skipper           |    Logs will be in /tmp/spring-cloud-deployer-6406189366663531439/test-1545564517607/test.time-v1
 
 ```
-So we need to print out the ` /tmp/spring-cloud-deployer-6406189366663531439/test-1545564517607/test.time-v1` files content.
+So we need to print out the `/tmp/spring-cloud-deployer-6406189366663531439/test-1545564517607/test.time-v1` files content.
 
 List the running containers and step inside:
 ```
@@ -158,7 +169,7 @@ $ docker exec -it <skipper_container_id> /bin/bash
 Then `cd` into log file directory. You have to print out the `stdout_0.log` content. Check the `source` and the `sink` too.
 
 ### Build your own app
-Check the applications source to create your own application, you can check them here[https://github.com/spring-cloud-stream-app-starters]. You can generate your app with (Spring Initializr)[https://github.com/spring-cloud-stream-app-starters].
+Check the application's source to create your own application, you can check them [here](https://github.com/spring-cloud-stream-app-starters). You can generate your app with [Spring Initializr](https://github.com/spring-cloud-stream-app-starters).
 
 ### Run and debug from IntelliJ
 Import the project as maven application and you can start the pre-configured Dataflow Server from `spring-cloud-dataflow-server/src/main/java/org/springframework/cloud/dataflow/server/single/DataFlowServerApplication.java`. Don't forget to set the environment variables.
