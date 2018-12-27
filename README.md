@@ -65,8 +65,8 @@ When the build finish successfully, jar files will be generated, so you can run 
 
 If the build ended you have to setup some environment variables for the stream applications and for the server too:
 ```
-spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.brokers=kafka:9092;
-spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.zkNodes=zookeeper:2181;
+spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.brokers=kafka:9092
+spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.zkNodes=zookeeper:2181
 spring.cloud.skipper.client.serverUri=http://127.0.0.1:7577/api
 ```
 **Note:** the `kafka` and the `zookeeper` keywords are used in the docker network, docker will resolve them to real IP adresses, if you don't use docker environment change them to `localhost` or another address.
@@ -81,6 +81,11 @@ java -jar spring-cloud-dataflow-server/target/spring-cloud-dataflow-server-<vers
 It is running on `http://localhost:9393` and you can reach the dashboard UI at `http://localhost:9393/dashboard/index.html`
 
 If you have a question, project Gitter channel: https://gitter.im/spring-cloud/spring-cloud-dataflow
+
+### Open with IntelliJ
+If you want to open the project in IntelliJ IDEA, you have to import it as Maven project. Do not forget to check the `Search for projects recursively` checkbox at the import window. Another important information, use this maven profiles: `imports, java8, spring`.
+
+Do not forget to set the proper code formatting settings and set the import grouping limit to 999.
 
 ### Install apps
 You have to install (register) apps to create streams. This is just an installation guideline documentation so we will not take deep dive. You can use maven local or remote URLs and local files on your local file system.
