@@ -28,3 +28,11 @@ services:
     ports:
       - "7577:7577"
       - "9000-9010:9000-9010"
+  mysql:
+    image: mariadb:10.2
+    environment:
+      MYSQL_DATABASE: dataflow
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: rootpw
+    ports:
+      - "3306:3306"

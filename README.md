@@ -6,6 +6,7 @@ This repo contains a docker based local development environment for Spring Cloud
 * [Zookeeper](https://zookeeper.apache.org/) coordination service for Kafka
 * [Redis](https://redis.io/) cache database to save stream data
 * [Skipper](https://cloud.spring.io/spring-cloud-skipper/) server to run and manage stream applications
+* [MariaDB](https://hub.docker.com/_/mariadb/) server to store SCDFS data and audit records
 
 Requirements:
 * Docker
@@ -70,6 +71,14 @@ spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.bin
 spring.cloud.skipper.client.serverUri=http://127.0.0.1:7577/api
 ```
 **Note:** the `kafka` and the `zookeeper` keywords are used in the docker network, docker will resolve them to real IP adresses, if you don't use docker environment change them to `localhost` or another address.
+
+If you want to use MariaDB, use these environment variables below:
+```
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/dataflow
+spring.datasource.username=root
+spring.datasource.password=rootpw
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+```
 
 You can export it in your current shell session or you set the variables at IntelliJ's Run/Debug Configurations
 
