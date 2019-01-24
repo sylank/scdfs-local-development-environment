@@ -2,4 +2,4 @@
 
 echo "Starting local development environment"
 
-sudo docker-compose up
+docker-compose up
