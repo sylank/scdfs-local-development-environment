@@ -74,11 +74,13 @@ spring.cloud.skipper.client.serverUri=http://127.0.0.1:7577/api
 
 If you want to use MariaDB, use these environment variables below:
 ```
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/dataflow
-spring.datasource.username=root
-spring.datasource.password=rootpw
-spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/dataflow
+spring.datasource.username=spring
+spring.datasource.password=spring
+spring.datasource.driver-class-name=org.postgresql.Driver
 ```
+Example command line execution command: 
+`java -jar spring-cloud-dataflow-server/target/spring-cloud-dataflow-server-2.3.0.BUILD-SNAPSHOT.jar --spring.datasource.url='jdbc:postgresql://localhost:5432/dataflow' --spring.datasource.username=spring --spring.datasource.password=spring --spring.datasource.driverClassName=org.postgresql.Driver`
 
 You can export it in your current shell session or you set the variables at IntelliJ's Run/Debug Configurations
 
