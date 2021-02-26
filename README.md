@@ -22,7 +22,7 @@ It is easy to use:
 **Note:** you will not reach the Kafka, Zookeeper, Redis service because we do not bint the ports to host due to `expose` keyword in the compose file. These services are reachable inside the docker network. If you want to reach them outside use `ports` keyword but check use different ports.
 
 ## Container check
-We need to check the proper working of the docker. Some Linux distribution can deny some service. For example, the **apparmor** can deny the port binding. Sometimes the docker cannot resolve DNS names. 
+We need to check the proper working of the docker. Some Linux distribution can deny some service. For example, the **apparmor** can deny the port binding. Sometimes the docker cannot resolve DNS names.
 
 Use jimho's tcp-echo server to check your containers can bind port on your host OS. If you can not see BindingExceptions or Permission denied exceptions your container have access to the host OS ports.
 
@@ -59,7 +59,7 @@ git clone https://github.com/spring-cloud/spring-cloud-dataflow.git
 
 Step inside the directory and build it with maven wrapper:
 ```
-./mvnw clean install or ./mvnw clean install -DskipTests 
+./mvnw clean install or ./mvnw clean install -DskipTests
 ```
 
 When the build finish successfully, jar files will be generated, so you can run the modules with java commands. We will use the `spring-cloud-dataflow-shell` to manage the server (do not afraid you can use TAB to auto-complete commands).
@@ -72,14 +72,14 @@ spring.cloud.skipper.client.serverUri=http://127.0.0.1:7577/api
 ```
 **Note:** the `kafka` and the `zookeeper` keywords are used in the docker network, docker will resolve them to real IP adresses, if you don't use docker environment change them to `localhost` or another address.
 
-If you want to use MariaDB, use these environment variables below:
+If you want to use PostgreSQL, use these environment variables below:
 ```
 spring.datasource.url=jdbc:postgresql://localhost:5432/dataflow
 spring.datasource.username=spring
 spring.datasource.password=spring
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
-Example command line execution command: 
+Example command line execution command:
 `java -jar spring-cloud-dataflow-server/target/spring-cloud-dataflow-server-2.3.0.BUILD-SNAPSHOT.jar --spring.datasource.url='jdbc:postgresql://localhost:5432/dataflow' --spring.datasource.username=spring --spring.datasource.password=spring --spring.datasource.driverClassName=org.postgresql.Driver`
 
 You can export it in your current shell session or you set the variables at IntelliJ's Run/Debug Configurations
@@ -148,7 +148,7 @@ Deploy the stream:
 dataflow:>stream deploy --name test
 ```
 
-Check the skipper logs and check the log files inside the docker container. 
+Check the skipper logs and check the log files inside the docker container.
 
 Example Skipper logs:
 ```
